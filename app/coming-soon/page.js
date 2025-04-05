@@ -17,7 +17,7 @@ export default function ComingSoon() {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://script.google.com/macros/library/d/1xqkvNEto1EpcfkvcuFj0EMB2L1M-xKVb4bDWRwWrsk3N9NXMGluFe3sS/3", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyR0C5hnJOCm_5XdutKDEKPGPeiQN9QiUnyHcuhfJZkyiwkMWGRQP9NB-p4tVjy-gvF/exec", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
