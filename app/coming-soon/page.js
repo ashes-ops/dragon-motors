@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { ref, push } from "firebase/database";
+import database from "../firebase"; // Adjust the path if needed
 
 export default function ComingSoon() {
   const videoRef = useRef(null);
@@ -17,21 +19,10 @@ export default function ComingSoon() {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyR0C5hnJOCm_5XdutKDEKPGPeiQN9QiUnyHcuhfJZkyiwkMWGRQP9NB-p4tVjy-gvF/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ phone }),
-      });
-
-      const result = await response.json();
-      if (result.status === "success") {
-        alert("თქვენი ნომერი წარმატებით გაიგზავნა!");
-        setPhone(""); // Clear the input field
-      } else {
-        alert("დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.");
-      }
+      const phoneRef = ref(database, "phoneNumbers"); // Create a reference to the "phoneNumbers" node
+      await push(phoneRef, { phone }); // Push the phone number to the database
+      alert("თქვენი ნომერი წარმატებით გაიგზავნა!");
+      setPhone(""); // Clear the input field
     } catch (error) {
       console.error("Error:", error);
       alert("დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.");
