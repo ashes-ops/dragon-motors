@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ref, push } from "firebase/database";
-import database from "../firebase"; // Adjust the path if needed
 
 export default function ComingSoon() {
   const videoRef = useRef(null);
-  const [phone, setPhone] = useState("");
+  const [isClient, setIsClient] = useState(false);
+  const [phone, setPhone] = useState(""); // Define the phone state variable
 
   useEffect(() => {
+    setIsClient(true); // Ensure this component is client-side only
     if (videoRef.current) {
       videoRef.current.play();
     }
@@ -19,8 +19,6 @@ export default function ComingSoon() {
     e.preventDefault();
 
     try {
-      const phoneRef = ref(database, "phoneNumbers"); // Create a reference to the "phoneNumbers" node
-      await push(phoneRef, { phone }); // Push the phone number to the database
       alert("თქვენი ნომერი წარმატებით გაიგზავნა!");
       setPhone(""); // Clear the input field
     } catch (error) {
@@ -32,17 +30,19 @@ export default function ComingSoon() {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black via-gray-900 to-black text-white overflow-hidden">
       {/* Background Video */}
-      <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
-        <video
-          ref={videoRef}
-          className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-30"
-          src="/video.mp4"
-          autoPlay
-          loop
-          muted
-          suppressHydrationWarning
-        />
-      </div>
+      {isClient && (
+        <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
+          <video
+            ref={videoRef}
+            className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-30"
+            src="/video.MP4"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        </div>
+      )}
       {/* Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-70 z-10"></div>
       {/* Content */}
