@@ -35,7 +35,7 @@ export default function ComingSoon() {
           <video
             ref={videoRef}
             className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-30"
-            src="https://drive.google.com/file/d/16AtjYSBPZgMfjBC27RxYMv-2rRhxVK69/view?usp=drive_link"
+            src="https://drive.google.com/uc?export=download&id=16AtjYSBPZgMfjBC27RxYMv-2rRhxVK69"
             autoPlay
             loop
             muted
