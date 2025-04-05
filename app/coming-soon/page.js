@@ -13,9 +13,29 @@ export default function ComingSoon() {
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`ჩვენ დაგიკავშირდებით : ${phone}`);
+
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyR0C5hnJOCm_5XdutKDEKPGPeiQN9QiUnyHcuhfJZkyiwkMWGRQP9NB-p4tVjy-gvF/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ phone }),
+      });
+
+      const result = await response.json();
+      if (result.status === "success") {
+        alert("თქვენი ნომერი წარმატებით გაიგზავნა!");
+        setPhone(""); // Clear the input field
+      } else {
+        alert("დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.");
+    }
   };
 
   return (
